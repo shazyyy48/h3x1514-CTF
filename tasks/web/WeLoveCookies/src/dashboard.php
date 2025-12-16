@@ -7,7 +7,7 @@ if(!isset($_SESSION['username'])) {
     exit();
 }
 
-$flag = "h3x1514{w3_4ll_l0ve_c00k13s}";
+$flag = "h3x1514{c00k13s_for3v3r_1n_my_h34rt}";
 $show_flag = false;
 
 // Проверяем куку Admin (УЯЗВИМОСТЬ!)
@@ -196,4 +196,5 @@ if(isset($_COOKIE['Admin']) && $_COOKIE['Admin'] === "True") {
         </div>
     </div>
 </body>
+
 </html>
