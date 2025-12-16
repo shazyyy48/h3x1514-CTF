@@ -5,6 +5,7 @@ services:
     container_name: banana-shell-php
     build: .
     ports:
-      - "8080:80"
+      - "3456:80"
     restart: unless-stopped
+
 
