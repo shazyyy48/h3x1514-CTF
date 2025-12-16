@@ -16,4 +16,5 @@ INSERT INTO users (login, password)
 VALUES ('admin', 'netvoyadmin123');
 
 INSERT INTO flags (flag)
-VALUES ('h3x1514{SQl_1nJ3cti0n_f1N4Lly_W0Rk1ng}');
+VALUES ('h3x1514{d0nt_7ry_t0_l0g1n_b4d_sql1}');
+
