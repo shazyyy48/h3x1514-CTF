@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Цветочный сад | Панель управления</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: white;
+            padding: 20px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            color: #ff6b8b;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .username {
+            color: #555;
+            font-weight: 600;
+        }
+        
+        .btn-logout {
+            padding: 8px 20px;
+            background: #ff6b8b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .btn-logout:hover {
+            background: #ff4757;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .welcome-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .welcome-title {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .secret-comment {
+            color: #666;
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-bottom: 25px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #4ecdc4;
+            font-family: monospace;
+            word-wrap: break-word;
+        }
+        
+        .welcome-text {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: #ff6b8b;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            color: #333;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        .card-text {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .btn-card {
+            display: inline-block;
+            padding: 10px 25px;
+            background: #4ecdc4;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.3s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .btn-card:hover {
+            background: #3dbcb4;
+        }
+        
+        .token-section {
+            background: #2d3436;
+            color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .token-title {
+            color: #dfe6e9;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .token-display {
+            background: #1e272e;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .token-display pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .token-header {
+            color: #74b9ff;
+        }
+        
+        .token-payload {
+            color: #55efc4;
+        }
+        
+        .token-signature {
+            color: #fd79a8;
+        }
+        
+        .token-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-token {
+            padding: 8px 15px;
+            background: #636e72;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        
+        .btn-token:hover {
+            background: #57606f;
+        }
+        
+        .admin-section {
+            background: linear-gradient(135deg, #ff6b8b 0%, #ff8e53 100%);
+            color: white;
+            border: 3px solid #ff4757;
+        }
+        
+        .admin-section .card-icon {
+            color: white;
+        }
+        
+        .admin-section .card-title {
+            color: white;
+        }
+        
+        .admin-section .card-text {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .admin-btn {
+            background: white;
+            color: #ff6b8b;
+        }
+        
+        .admin-btn:hover {
+            background: #f1f2f6;
+            color: #ff6b8b;
+        }
+        
+        .info-box {
+            background: #fff9e6;
+            border-left: 4px solid #fdcb6e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .info-title {
+            color: #e17055;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-text {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Стили для результатов флага */
+        .flag-result-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            max-width: 100%;
+            overflow: hidden;
+        }
+        
+        .flag-result-content {
+            color: white;
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* Секция с замком */
+        .lock-icon {
+            font-size: 1.5rem;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .token-actions {
+                flex-direction: column;
+            }
+            
+            .btn-token {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-flower"></i>
+            Цветочный сад
+        </div>
+        <div class="user-info">
+            <span class="username" id="username">Загрузка...</span>
+            <button class="btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Выйти
+            </button>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="welcome-section">
+            <h1 class="welcome-title">Добро пожаловать в Цветочный сад! 🌸</h1>
+            
+            <!-- СЕКРЕТНЫЙ КОММЕНТАРИЙ С КЛЮЧОМ -->
+            <!-- Секретный ключ для JWT: aXRzLW5vdC1hLWZsYWctYnV0LWl0cy1pbXBvcnRhbnQ -->
+            
+            <p class="welcome-text">
+                Вы успешно вошли в систему. Здесь вы можете управлять доступом к различным разделам сада.
+                Обратите внимание: некоторые области требуют особых привилегий.
+            </p>
+        </div>
+        
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <h3 class="card-title">Информация о пользователе</h3>
+                <p class="card-text">
+                    Просмотрите информацию о вашей учетной записи и текущем сеансе.
+                </p>
+                <button class="btn-card" onclick="getUserInfo()">
+                    <i class="fas fa-user"></i> Показать информацию
+                </button>
+                <div id="userInfo" style="margin-top: 15px; display: none;"></div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h3 class="card-title">Токен сессии</h3>
+                <p class="card-text">
+                    Ваш JWT токен для текущей сессии. Используется для аутентификации.
+                </p>
+                <button class="btn-card" onclick="showToken()">
+                    <i class="fas fa-eye"></i> Показать токен
+                </button>
+            </div>
+            
+            <div class="card admin-section">
+                <div class="card-icon">
+                    <i class="fas fa-lock lock-icon"></i>
+                </div>
+                <h3 class="card-title">🔒 Секретный раздел</h3>
+                <p class="card-text">
+                    Доступно только администраторам. Попробуйте получить доступ к этому разделу.
+                </p>
+                <button class="btn-card admin-btn" onclick="getFlag()">
+                    <i class="fas fa-lock-open"></i> Попробовать получить доступ
+                </button>
+                <div id="flagResult" style="margin-top: 15px; display: none;"></div>
+            </div>
+        </div>
+        
+        <div class="token-section" id="tokenSection" style="display: none;">
+            <h3 class="token-title">
+                <i class="fas fa-shield-alt"></i> Ваш JWT токен
+            </h3>
+            <div class="token-display" id="tokenDisplay">
+                <!-- Токен будет вставлен здесь -->
+            </div>
+            <div class="token-actions">
+                <button class="btn-token" onclick="copyToken()">
+                    <i class="fas fa-copy"></i> Копировать
+                </button>
+                <button class="btn-token" onclick="decodeToken()">
+                    <i class="fas fa-code"></i> Декодировать
+                </button>
+                <button class="btn-token" onclick="debugToken()">
+                    <i class="fas fa-bug"></i> Отладка
+                </button>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3 class="info-title">
+                <i class="fas fa-lightbulb"></i> Техническая информация
+            </h3>
+            <p class="info-text">
+                JWT (JSON Web Token) состоит из трех частей, разделенных точками: header.payload.signature.<br>
+                Header определяет алгоритм подписи, payload содержит данные пользователя, signature проверяет целостность токена.<br>
+                Для изменения payload требуется правильная подпись с использованием секретного ключа.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Получить куку
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) {
+                const token = parts.pop().split(';').shift();
+                console.log('Found token in cookie:', token ? 'Yes' : 'No');
+                return token;
+            }
+            console.log('Token not found in cookies');
+            return null;
+        }
+        
+        // Получить информацию о пользователе
+        async function getUserInfo() {
+            try {
+                const response = await fetch('/api/user');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('userInfo').innerHTML = `
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                            <p><strong>Имя пользователя:</strong> ${data.username}</p>
+                            <p><strong>Время выдачи:</strong> ${new Date(data.iat * 1000).toLocaleString()}</p>
+                            <p><strong>Истекает:</strong> ${new Date(data.exp * 1000).toLocaleString()}</p>
+                        </div>
+                    `;
+                    document.getElementById('userInfo').style.display = 'block';
+                } else {
+                    alert('Ошибка получения информации: ' + data.error);
+                }
+            } catch (error) {
+                alert('Ошибка соединения');
+            }
+        }
+        
+        // Показать JWT токен
+        async function showToken() {
+            console.log('showToken called');
+            const token = getCookie('auth_token');
+            
+            if (!token) {
+                alert('Токен не найден, откройте инспектор в браузере');
+                return;
+            }
+            
+            // Разделяем токен на части
+            const parts = token.split('.');
+            
+            if (parts.length === 3) {
+                let display = '';
+                
+                try {
+                    // Декодируем части
+                    const header = JSON.parse(atob(parts[0].replace(/-/g, '+').replace(/_/g, '/')));
+                    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+                    
+                    display = `
+                        <div class="token-header">
+                            <strong>Header:</strong><br>
+                            <pre>${JSON.stringify(header, null, 2)}</pre>
+                        </div>
+                        <hr style="margin: 15px 0; border-color: #444;">
+                        <div class="token-payload">
+                            <strong>Payload:</strong><br>
+                            <pre>${JSON.stringify(payload, null, 2)}</pre>
+                        </div>
+                        <hr style="margin: 15px 0; border-color: #444;">
+                        <div class="token-signature">
+                            <strong>Signature:</strong><br>
+                            ${parts[2].substring(0, 20)}...
+                        </div>
+                    `;
+                } catch (e) {
+                    console.error('Error parsing token:', e);
+                    display = `<div>Ошибка декодирования токена: ${e.message}</div>`;
+                }
+                
+                document.getElementById('tokenDisplay').innerHTML = display;
+                document.getElementById('tokenSection').style.display = 'block';
+                
+                // Прокрутить к токену
+                document.getElementById('tokenSection').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert('Некорректный формат токена');
+            }
+        }
+        
+        // Копировать токен
+        function copyToken() {
+            const token = getCookie('auth_token');
+            
+            if (!token) {
+                alert('Токен не найден');
+                return;
+            }
+            
+            navigator.clipboard.writeText(token)
+                .then(() => alert('Токен скопирован в буфер обмена!'))
+                .catch(() => alert('Не удалось скопировать токен'));
+        }
+        
+        // Декодировать токен
+        async function decodeToken() {
+            const token = getCookie('auth_token');
+            
+            if (!token) {
+                alert('Токен не найден');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/debug-token');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    const result = JSON.stringify(data, null, 2);
+                    alert('Декодированный токен:\n\n' + result);
+                } else {
+                    alert('Ошибка декодирования: ' + data.error);
+                }
+            } catch (error) {
+                alert('Ошибка соединения');
+            }
+        }
+        
+        // Отладка токена
+        async function debugToken() {
+            try {
+                const response = await fetch('/api/debug-token');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('tokenDisplay').innerHTML = `
+                        <pre style="color: white;">${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                    document.getElementById('tokenSection').style.display = 'block';
+                }
+            } catch (error) {
+                alert('Ошибка отладки');
+            }
+        }
+        
+        // Получить флаг
+        async function getFlag() {
+            const flagResult = document.getElementById('flagResult');
+            flagResult.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Проверка доступа...</div>';
+            flagResult.style.display = 'block';
+            
+            try {
+                const response = await fetch('/flag');
+                const data = await response.json();
+                
+                flagResult.innerHTML = `
+                    <div class="flag-result-box">
+                        <pre class="flag-result-content">${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+                flagResult.style.display = 'block';
+            } catch (error) {
+                flagResult.innerHTML = `
+                    <div class="flag-result-box">
+                        <pre class="flag-result-content" style="color: #ff6b6b;">Ошибка при запросе: ${error.message}</pre>
+                    </div>
+                `;
+                flagResult.style.display = 'block';
+            }
+        }
+        
+        // Выход
+        function logout() {
+            fetch('/logout')
+                .then(() => window.location.href = '/')
+                .catch(() => window.location.href = '/');
+        }
+        
+        // Загрузить информацию при входе
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                const response = await fetch('/api/user');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('username').textContent = data.username;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки пользователя:', error);
+            }
+            
+            // Проверяем наличие токена при загрузке
+            const token = getCookie('auth_token');
+            console.log('Initial token check:', token ? 'Found' : 'Not found');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тайный сад - Доступ</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        .message-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #007bff;
+        }
+        
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        
+        .error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .success {
+            border-left-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .back-link:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌸 Тайный сад 🌸</h1>
+        
+        <% if (error) { %>
+            <div class="message-box error">
+                <h3>Ошибка доступа</h3>
+                <p><%= error %></p>
+                <% if (message) { %>
+                    <pre><%= message %></pre>
+                <% } %>
+            </div>
+        <% } %>
+        
+        <% if (success) { %>
+            <div class="message-box success">
+                <h3>Доступ разрешен!</h3>
+                <p><%= message %></p>
+                <% if (flag) { %>
+                    <pre>{
+  "flag": "<%= flag %>",
+  "message": "<%= special %>",
+  "status": "success"
+}</pre>
+                <% } %>
+            </div>
+        <% } else if (message) { %>
+            <div class="message-box">
+                <h3>Информация</h3>
+                <pre><%= JSON.stringify({ message, current_user }, null, 2) %></pre>
+            </div>
+        <% } %>
+        
+        <a href="/" class="back-link">← Вернуться в сад</a>
+    </div>
+</body>
+</html>
